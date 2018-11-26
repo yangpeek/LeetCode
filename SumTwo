@@ -1,0 +1,38 @@
+import java.util.HashMap;
+public class Sumtwo{
+
+     public static void main(String []args){
+        int[] Array = { 1, 2, 3, 4, 5, 6 };
+        sumtwo_test(Array, 5, 2, 1);
+     }
+     
+     // to do: JUnit test
+     private static void sumtwo_test(int[] array, int target, int expected_high_index, int expected_low_index) {
+         int[] indexes = sumtwo(array, target);
+         
+         if (indexes[0] != expected_high_index || indexes[1] != expected_low_index) {
+             System.out.println("Encountered Eror.");
+         }
+         else {
+                 System.out.println("Test Good.");
+         }
+     }
+     
+     // Hash Map detect the remaining.
+     // O(n) runing time.
+     // O(n) space.
+     // Small index ended first.
+     // Explicitely avoid throw exception.
+     private static int[] sumtwo(int[] array, int target) {
+         HashMap<Integer, Integer> map = new HashMap<>();
+         for (int i = 0; i < array.length; i++ ) {
+             int value = array[i];
+             int remaining = target - value;
+             if (map.containsKey(remaining)) {
+                 return new int[]{ i, map.get(remaining) };
+             }
+             map.put(value,i);
+         }
+         return new int[]{0,0};
+     }
+}
