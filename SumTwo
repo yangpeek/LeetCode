@@ -53,4 +53,28 @@ public class Sumtwo{
          }
          return new int[]{0,0};
      }
+     
+     // O(n) for pairing run time,
+     // scale for pairing space.
+     // highest indexed pair return first.
+     // test case: sumtwo_test(Array, 5, 3, 0);
+     private static int[] sumtwo_sorted(int[] array, int target) {
+         int low_index = 0;
+         int high_index = array.length - 1;
+         if (low_index != high_index) {
+             while (low_index < high_index) {
+                 int sum = array[low_index] + array[high_index];
+                 if (sum == target) {
+                     return new int[]{high_index, low_index};
+                 }
+                 else if ( sum > target ) {
+                     high_index -= 1;
+                 } 
+                 else {
+                     low_index += 1;
+                 }
+             }
+         }
+         return new int[]{0,0};
+     }
 }
