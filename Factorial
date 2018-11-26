@@ -1,0 +1,33 @@
+public class Factorial {
+    
+    public static void main(String[] args) {
+        Factorial_test(-1, -1);
+        Factorial_test(0, 1);
+        Factorial_test(1, 1);
+        Factorial_test(2, 2);
+        Factorial_test(5, 120);
+    }
+    
+    public static void Factorial_test(int n, int expected) {
+        if (Factorial(n) != expected) {
+            System.out.println("Err Encountered.");
+        }
+        else {
+            System.out.println("Test Good");
+        }
+    }
+    
+    // O(n) run time.
+    // can use the psudo recursive:
+    // F(n) = n * F(n-1)
+    public static int Factorial(int n) {
+        if ( n < 0 ) {
+            return -1;
+        }
+        int value = 1;
+        for(int i = 1; i <= n; i ++) {
+            value *= i;
+        } 
+        return value;
+    }
+}
