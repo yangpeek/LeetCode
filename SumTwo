@@ -1,4 +1,21 @@
 import java.util.HashMap;
+
+/********** Algorithm Analyzing:**********
+1. Space trade off for timing:
+   Hashmap for storing value and index, 
+   Retreive remaining from the hashmap.
+   O(n) for both run time and space.
+   
+2. Brutal matching, for two round of loop:
+   O(n^2) for run time, scale space.
+   
+3. Sorting first, and then left & right index:
+   O(nlogn) for sorting run time, 
+   O(n) for merge sort space.
+   O(n) for pairing run time,
+   scale for pairing space.
+*****************************************/
+
 public class Sumtwo{
 
      public static void main(String []args){
@@ -21,6 +38,7 @@ public class Sumtwo{
      // Hash Map detect the remaining.
      // O(n) runing time.
      // O(n) space.
+     // n is defined as the length of the array.
      // Small index ended first.
      // Explicitely avoid throw exception.
      private static int[] sumtwo(int[] array, int target) {
