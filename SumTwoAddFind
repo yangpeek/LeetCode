@@ -1,0 +1,52 @@
+/**********************
+This impl is: O(n) space, O(1) add, O(n) find
+Based on different trade off, Options could be:
+O(n^2) space, O(n) add, O(1) find, if find / add is high.
+***********************/
+
+import java.util.HashMap;
+import java.util.Iterator;
+
+public class SumTwo{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        SumTwoImpl impl = new SumTwoImpl();
+        impl.add(1);
+        impl.add(2);
+        impl.add(5);
+        boolean rest = impl.find(3); // should be true
+        System.out.println(rest);
+        rest = impl.find(8); // should be false
+        System.out.println(rest);
+        rest = impl.find(4); // should be false
+        System.out.println(rest);
+     }
+
+
+     static class SumTwoImpl {
+         HashMap<Integer, Integer> values = new HashMap<> ();
+    
+         public void add(Integer value) {
+             int count = values.containsKey(value) ? values.get(value) : 0;
+             values.put(value, count + 1);
+         }
+         
+         public boolean find(Integer value) {
+             for(HashMap.Entry<Integer, Integer> pair : values.entrySet() ) {
+                 Integer key = pair.getKey();
+                 Integer remain = value - key ;
+                 System.out.printf("%d, %d\n", pair.getKey(), pair.getValue());
+                 if (key == remain) {
+                     if (pair.getValue() >= 2) {
+                         return true;
+                     }
+                 }
+                 else if ( values.containsKey(remain) ) {
+                     return true;
+                 } 
+             }
+             return false;
+         }
+     }
+}
