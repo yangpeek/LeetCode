@@ -1,0 +1,31 @@
+/****************
+O(n) at run time, 
+O(1) at space,
+n is string length
+****************/
+public class Palindrome {
+
+     public static void main(String []args) {
+        System.out.println("Hello World");
+        boolean rest = palindrome_detect("A man, a plan, a canal: Panama" );
+        System.out.println(rest);
+     }
+
+     static boolean palindrome_detect(String input) {
+         int begin = 0;
+         int end = input.length() - 1;
+         while (end >= begin) {
+             // Need to keep looping till get the next letter or digit, 
+             // And need to confirm do not put begin after end.
+             while (end > begin && !Character.isLetterOrDigit(input.charAt(begin) ) ) begin ++;
+             while (end > begin && !Character.isLetterOrDigit(input.charAt(end) ) ) end --;
+             if ( Character.toLowerCase(input.charAt(begin)) != Character.toLowerCase(input.charAt(end)) ) {
+                 return false;
+             } else {
+                 begin += 1;
+                 end -= 1;
+             }
+         }
+         return true;
+     }
+}
