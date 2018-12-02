@@ -1,0 +1,43 @@
+public class Atoi{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int value = atoi("    ");
+        System.out.println(value);
+        value = atoi("a");
+        System.out.println(value);
+        value = atoi("  5");
+        System.out.println(value);
+        value = atoi("  -5");
+        System.out.println(value);
+        value = atoi("9234567890");
+        System.out.println(value);
+        value = atoi("-9234567890");
+        System.out.println(value);
+     }
+     
+     // runtime O(n)
+     // space O(1)
+     // use the new_value to bypass the max / min detection.
+     public static int atoi(String input) {
+         int current_pos = 0;
+         int sign = 1;
+         int value = 0;
+         while (current_pos < input.length()) {
+             if (input.charAt(current_pos) == ' ') {
+                 // explicitly leave it blank to bypass spaces
+             } else if (input.charAt(current_pos) == '-') {
+                 sign = -1;
+             } else if (Character.isDigit(input.charAt(current_pos))) {
+                 int new_value = value * 10 + input.charAt(current_pos) - '0';
+                 if (new_value > value) {
+                     value = new_value;
+                 } else {
+                     return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+                 }
+             }
+             current_pos += 1;
+         }
+         return sign * value;
+     }
+}
