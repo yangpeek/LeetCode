@@ -1,0 +1,50 @@
+public class ValidNumber{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        boolean v = valid("1.1");
+        System.out.println(v);
+        v = valid("2");
+        System.out.println(v);
+        v = valid("-3.3");
+        System.out.println(v);
+        v = valid("    2");
+        System.out.println(v);
+        v = valid("    2    1    1");
+        System.out.println(v);
+     }
+     
+     // runtime O(n)
+     // space O(1)
+     public static boolean valid(String input) {
+         int current_pos = 0;
+         boolean see_digit = false;
+         while (current_pos < input.length() &&
+                input.charAt(current_pos) == ' ') current_pos ++;
+         System.out.println(current_pos);
+         if (input.charAt(current_pos) == '+' ||
+             input.charAt(current_pos) == '-') {
+             current_pos ++; 
+         }
+         System.out.println(current_pos);
+         while (current_pos < input.length() && 
+                Character.isDigit(input.charAt(current_pos))) {
+             current_pos ++;
+             see_digit = true;
+         }
+         System.out.println(current_pos);
+         if (current_pos < input.length() && input.charAt(current_pos) == '.') 
+            current_pos ++;
+         System.out.println(current_pos);
+         while (current_pos < input.length() && 
+                Character.isDigit(input.charAt(current_pos))) {
+             current_pos ++;
+             see_digit = true;
+         }
+         System.out.println(current_pos);
+         while (current_pos < input.length() &&
+                input.charAt(current_pos) == ' ') current_pos ++;
+         System.out.println(current_pos);
+         return see_digit && current_pos == input.length();
+     }
+}
