@@ -1,0 +1,52 @@
+public class Str{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int p1 = strstr("abba", "ba");
+        System.out.println(p1);
+        p1 = strstr("abba", "ab");
+        System.out.println(p1);
+        p1 = strstr("abba", "");
+        System.out.println(p1);
+     }
+     
+     public static int strstr(String text, String search) {
+         int ret = -1;
+         if ( search.length() > text.length() ) {
+             ret = -1;
+         } else if ( search.length() == 0 ) {
+             ret = 0;
+         } else {
+             for ( int text_pos = 0; text_pos < text.length(); text_pos ++ ) {
+                 boolean match = true;
+                 for ( int search_pos = 0; search_pos < search.length(); search_pos ++ ) {
+                     if ( text.charAt(text_pos + search_pos) != search.charAt(search_pos) ) {
+                         match = false;
+                         break;
+                     }
+                 }
+                 if (match == true) {
+                     ret = text_pos;
+                     break;
+                 }
+             }
+         }
+         return ret;
+     }
+     
+     public static int strstr2(String text, String search) {
+         int ret = -1;
+         for ( int text_pos = 0; ; text_pos ++ ) {
+             for ( int search_pos = 0; ; search_pos ++) {
+                 // never break for the unmatch from the text_pos
+                 if (search_pos == search.length()) return text_pos;
+                 int current_text_search_post = text_pos + search_pos;
+                 // the current search pos based on text pos 
+                 // exceed the text length, no result found
+                 if (current_text_search_post == text.length()) return -1;
+                 if (text.charAt(current_text_search_post) != search.charAt(search_pos)) break;
+             }
+         }
+     }
+
+}
