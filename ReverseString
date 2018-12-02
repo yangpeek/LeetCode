@@ -1,0 +1,74 @@
+public class ReverseString{
+ 
+     public static void main(String []args){
+        System.out.println("Hello World");
+        String input = "   sky is blue   ";
+        char[] chars = input.toCharArray();
+        reverseString3(chars);
+        System.out.println(chars);
+     }
+     
+     // Run-time O(n),
+     // Space O(n),
+     // n is defined as length of input
+     public static String reverseString(String input) {
+         int word_end = input.length();
+         int word_begin = word_end;
+         StringBuilder ret = new StringBuilder();
+         while (word_begin >= 0) {
+             if (word_begin == 0 || input.charAt(word_begin-1) == ' ') {
+                 ret.append(input.substring(word_begin, word_end));
+                 if ( ret.length() != 0 ) {
+                     ret.append(" ");
+                 }
+                 word_end = word_begin - 1;
+                 word_begin = word_end - 1;
+             } else {
+                 word_begin -= 1;
+             }
+         }
+         return ret.toString();
+     }
+     
+     // Run-time O(n),
+     // Space O(1),
+     // n is defined as length of input
+     public static void reverseString2(char[] input) {
+         reverseString(input, 0, input.length - 1);
+         int word_begin = 0;
+         int word_end = 0;
+         while (word_end < input.length - 1) {
+             while (word_end < input.length - 1 && input[word_end] == ' ') {
+                 word_begin += 1;
+                 word_end += 1;
+             }
+             while (word_end < input.length - 1 && Character.isLetter(input[word_end])) {
+                 word_end += 1;
+             }
+             reverseString(input, word_begin, word_end-1);
+             word_begin = word_end;
+         }
+     }
+     
+     public static void reverseString3(char[] input) {
+         reverseString(input, 0, input.length);
+         for (int word_begin = 0, word_end = 0; word_end <= input.length; word_end ++) {
+             if ( word_end == input.length || input[word_end] == ' ' ) {
+                 reverseString(input, word_begin, word_end);
+                 word_begin = word_end + 1;
+             }
+         }
+     }
+
+     public static void reverseString(char[] input, int start, int end) {
+         System.out.printf("%d,%d\n", start, end);
+         while (start < end) {
+             char tmp = input[start];
+             input[start] = input[end - 1];
+             input[end - 1] = tmp;
+             start += 1;
+             end -= 1;
+         }
+         System.out.println(input);
+     }
+}
