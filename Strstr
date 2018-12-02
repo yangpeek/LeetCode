@@ -1,3 +1,9 @@
+/****************************************
+O(n*m) 
+n is length of text, 
+m is length of search.
+****************************************/
+
 public class Str{
 
      public static void main(String []args){
