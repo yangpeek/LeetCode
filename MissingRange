@@ -1,0 +1,34 @@
+import java.util.ArrayList;
+public class MissingRanges{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int[] input = {0, 1, 3, 50, 75};
+        ArrayList<String> ret = missingRange(input);
+        System.out.println(ret);
+     }
+     
+     public static ArrayList<String> missingRange(int[] input) {
+         int min = 0;
+         int max = 99;
+         int last_value = 0;
+         ArrayList<String> ret = new ArrayList<String>();
+         for ( int index = 0; index < input.length; index ++ ) {
+             if (input[index] > min) {
+                 ret.add(populateString(min, input[index] - 1));
+             }
+             min = input[index] + 1;
+             if (index == input.length - 1) {
+                 last_value = input[index];
+             } 
+         } 
+         if (last_value < max) {
+             ret.add(populateString(last_value + 1, max));
+         }
+         return ret;
+     }
+     
+     public static String populateString(int missing_min, int missing_high) {
+         return missing_min == missing_high ? String.valueOf(missing_min) : String.valueOf(missing_min) + "->" + String.valueOf(missing_high);
+     }
+}
