@@ -1,0 +1,27 @@
+import java.util.HashSet;
+public class LongSubNoRepeat{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        String sub = longSubNoRepeat("abcdefga");
+        System.out.println(sub);
+        sub = longSubNoRepeat("abba");
+        System.out.println(sub);
+        sub = longSubNoRepeat("abc");
+        System.out.println(sub);
+     }
+     
+     // runtime O(n)
+     // space O(1)
+     public static String longSubNoRepeat(String input) {
+         HashSet<Character> seen = new HashSet<Character>();
+         for ( int index = 0; index < input.length(); index ++ ) {
+             if (seen.contains(input.charAt(index))) {
+                 return input.substring(0, index);
+             } else {
+                 seen.add(input.charAt(index));
+             }
+         }
+         return input;
+     }
+}
