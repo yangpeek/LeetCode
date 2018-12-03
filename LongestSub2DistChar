@@ -1,0 +1,34 @@
+import java.util.HashSet;
+
+public class LongestSub2DistinctChar{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int pos = longestSub2DistinctChar("abbcc");
+        System.out.println(pos);
+        pos = longestSub2DistinctChar("abbac");
+        System.out.println(pos);
+     }
+     
+     // HashSet benefit: can adapt N distinct chars easily.
+     // Alternative way: char[] instead of HashSet.
+     // Runtime: O(n),
+     // n is defined as length of the input.
+     // Space: O(1), 
+     // based on different scenario: 
+     // the space for the O(1) can be large 
+     // if distinct chars are large number.
+     public static int longestSub2DistinctChar(String input) {
+         HashSet<Character> set = new HashSet<Character>();
+         int current_pos = 0;
+         for (; current_pos < input.length(); current_pos ++) {
+             if (!set.contains(input.charAt(current_pos))) {
+                 set.add(input.charAt(current_pos));
+             }
+             if (set.size() > 2) {
+                 break;
+             }
+         }
+         return current_pos;
+     }
+}
