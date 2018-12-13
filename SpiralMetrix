@@ -1,0 +1,85 @@
+// O(n) for the run time speed
+// O(1) for the space, since direct print
+public class SpiralOutput{
+     public static void main(String []args){
+        System.out.println("Hello World");
+        int[][] input = {{1, 2, 3, 4, 5}, 
+                         {14, 15, 16, 17, 6},
+                         {13, 20, 19, 18, 7},
+                         {12, 11, 10, 9, 8}};
+        int row = 4;
+        int column = 5;
+        Spiral spiral_test = new Spiral(input, row, column);
+        spiral_test.DoSpiral();
+     }
+     
+     public static class Spiral {
+         int[][] input;
+         int row;
+         int column;
+         int total;
+         int level;
+         int direction;
+         int eval_cnt;
+         int cur_c;
+         int cur_r;
+         
+         public Spiral(int[][] in, int r, int c) {
+             input = in; 
+             row = r;
+             column = c;
+             total = row * column;
+             level = 0;
+             direction = 0;
+             eval_cnt = 0;
+             cur_c = 0;
+             cur_r = 0;
+         }
+         
+         private void OutputLeftRight() {
+             if (cur_r == 0) 
+                System.out.printf("%d ", input[cur_r][cur_c]);
+            for (cur_c++; cur_c < this.column - this.level; cur_c ++) {
+                System.out.printf("%d ", input[cur_r][cur_c]);
+                this.eval_cnt ++;
+            }
+         }
+         private void OutputUpDown() {
+             for (cur_c--; cur_r < row - level; cur_r ++) {
+                 System.out.printf("%d ", input[cur_r][cur_c]);
+                 eval_cnt ++;
+             }
+         }
+         private void OutputRightLeft() {
+            for (cur_r--; cur_c >= this.level; cur_c --) {
+                System.out.printf("%d ", input[cur_r][cur_c]);
+                this.eval_cnt ++;
+            }
+         }
+         private void OutputDownUp() {
+             for (cur_c++; cur_r > level; cur_r--) {
+                System.out.printf("%d ", input[cur_r][cur_c]);
+                 eval_cnt ++;
+             }
+         }
+         public void DoSpiral() {
+             while (eval_cnt < total) {
+                 switch(direction%4) {
+                     case 0: 
+                         OutputLeftRight();
+                         break;
+                     case 1:
+                         OutputUpDown();
+                         break;
+                     case 2:
+                         OutputRightLeft();
+                         break;
+                     case 3: 
+                         OutputDownUp();
+                         level ++;
+                 }
+                 direction ++;
+             }
+         }
+     }
+}
