@@ -1,0 +1,79 @@
+public class solution {
+    
+    public static void main(String[] args) {
+        IntegerNode left = new IntegerNode(342);
+        IntegerNode right = new IntegerNode(465);
+        left.PrintList();
+        right.PrintList();
+        IntegerNode rest = AddLists(left, right);
+        rest.PrintList();
+    }
+    
+    private static class IntegerNode {
+        int digit;
+        IntegerNode next;
+        
+        IntegerNode(int input) {
+            if (input >= 0 && input < 10) {
+                digit = input;
+            } else if (input > 10) {
+                digit = input % 10;
+                next = new IntegerNode(input / 10);
+            }
+        }
+        
+        public void PrintList() {
+            IntegerNode list = this;
+            while (list!=null) {
+                System.out.printf("%d=>", list.digit);
+                list = list.next;
+            }
+            System.out.printf("\n");
+        }
+    }
+
+    public static IntegerNode AddLists(IntegerNode l1, IntegerNode l2) {
+        IntegerNode list1 = l1;
+        IntegerNode list2 = l2;
+        boolean moreThan10 = false;
+        IntegerNode head = new IntegerNode(0);
+        IntegerNode rest = head;
+        while (list1 != null || list2 != null) {
+            moreThan10 = AddNode(list1, list2, moreThan10, rest);
+            head.PrintList();
+            rest = rest.next;
+            if (list1 != null) { 
+                list1 = list1.next;
+            }
+            if (list2 != null) {
+                list2 = list2.next;
+            }
+        }
+        if (moreThan10 == true) {
+            rest = new IntegerNode(1);
+        }
+        return head.next;
+    }
+        
+    public static boolean AddNode(IntegerNode node1, IntegerNode node2, boolean moreThan10, IntegerNode rest) {
+        int sum = 0;
+        if (node1 != null && node2 != null ) {
+            sum = node1.digit + node2.digit;
+        } else if (node1 != null) {
+            sum = node1.digit;
+        } else if (node2 != null) {
+            sum = node2.digit;
+        }
+        if (moreThan10) {
+            sum++;
+        }
+        if (sum >= 10) {
+            moreThan10 = true;
+            sum -= 10;
+        } else {
+            moreThan10 = false;
+        }
+        rest.next = new IntegerNode(sum);
+        return moreThan10;
+    }
+}
