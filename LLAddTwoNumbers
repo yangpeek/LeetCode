@@ -1,3 +1,4 @@
+// O(n) speed n is defined as the longest value
 public class solution {
     
     public static void main(String[] args) {
