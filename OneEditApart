@@ -1,0 +1,61 @@
+public class solution {
+    
+    public static void main(String[] args) {
+        boolean t1 = OneEditApart("cat", "dog"); // false 
+        System.out.println(t1);
+        boolean t2 = OneEditApart("cat", "cats"); // true
+        System.out.println(t2);
+        boolean t3 = OneEditApart("cat", "cut"); // true
+        System.out.println(t3);
+        boolean t4 = OneEditApart("cat", "cast"); // true
+        System.out.println(t4);
+        boolean t5 = OneEditApart("cat", "at"); // true
+        System.out.println(t5);
+        boolean t6 = OneEditApart("cat", "act"); // false
+        System.out.println(t6);
+    }
+    
+    public static boolean OneEditApart(String s_short, String s_long) {
+        if (s_short.length() > s_long.length()) {
+            return OneEditApart(s_long, s_short);
+        }
+        if (s_short.length() == s_long.length()) {
+            return replace(s_short, s_long);
+        }
+        else if (s_long.length() == s_short.length() + 1 ) {
+            return addOne(s_short, s_long);
+        }
+        return false;
+    }
+    
+    public static boolean replace(String s1, String s2) {
+        int diff = 0;
+        for ( int cur_pos = 0; cur_pos < s1.length(); cur_pos ++ ) {
+            if (s1.charAt(cur_pos) != s2.charAt(cur_pos) ) {
+                diff++;
+            }
+        }
+        return diff == 1;
+    }
+    
+    public static boolean addOne(String s_short, String s_long) {
+        int cur_short_pos = 0; 
+        int cur_long_pos = 0;
+        int diff = 0;
+        System.out.printf("%s, %s\n", s_short, s_long);
+        while (cur_short_pos < s_short.length() && cur_long_pos < s_long.length()) {
+            if (s_short.charAt(cur_short_pos) != s_long.charAt(cur_long_pos)) {
+                System.out.printf("%d, %d\n", cur_short_pos, cur_long_pos);
+                diff++;
+                cur_long_pos++;
+            } else {
+                cur_long_pos++;
+                cur_short_pos++;
+            }
+        }
+        if (diff == 0 && cur_long_pos != s_long.length()) {
+            diff++;
+        }
+        return diff == 1;
+    }
+}
