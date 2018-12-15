@@ -1,0 +1,48 @@
+// O(n^2) run time,
+// O(1) space,
+// n is defined as length of the testing string
+public class LongestSubstringPalindrome{
+     public static void main(String []args){
+        System.out.println("Hello World");
+        String input = "abcdedcbae";
+        String output = longestSubstringPalin(input);
+        System.out.println(output);
+     }
+     
+     public static String longestSubstringPalin(String input) {
+         int longest_start = 0;
+         int longest_end = 0;
+         int longest_length = 0;
+         for (int center = 0; center < input.length(); center ++) {
+             int cur_start = 0;
+             int cur_end = 0;
+             int step_double_center = findPalin(input, center, center+1);
+             if (step_double_center > 0) {
+                 cur_start = center - step_double_center + 1;
+                 cur_end = center + step_double_center;
+             }
+             int step_single_center = findPalin(input, center, center);
+             if (step_single_center > step_double_center) {
+                 cur_start = center - step_single_center + 1;
+                 cur_end = center + step_single_center;
+             }
+             if ( ( cur_end - cur_start + 1 ) > ( longest_end - longest_start + 1 ) ) {
+                 System.out.printf("cur_start: %d, cur_end: %d\n", cur_start, cur_end);
+                 longest_start = cur_start;
+                 longest_end = cur_end;
+             }
+         }
+         System.out.printf("start: %d, end: %d\n", longest_start, longest_end);
+         return input.substring(longest_start, longest_end);
+     }
+     
+     public static int findPalin(String input, int left, int right) {
+         int step = 0;
+         while (left >= 0 && right < input.length() && input.charAt(left) == input.charAt(right)) {
+             left --;
+             right ++;
+             step ++;
+         }
+         return step;
+     }
+}
