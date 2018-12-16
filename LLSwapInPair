@@ -1,0 +1,58 @@
+public class solution {
+    
+    public static void main(String[] args) {
+        Node list = new Node(1234567);
+        list.PrintList();
+        list = SwapInPair(list);
+        list.PrintList();
+    }
+    
+    private static class Node {
+        int digit;
+        Node next;
+        
+        Node(int input) {
+            if (input >= 0 && input < 10) {
+                digit = input;
+            } else if (input > 10) {
+                digit = input % 10;
+                next = new Node(input / 10);
+            }
+        }
+        
+        public void PrintList() {
+            Node list = this;
+            while (list!=null) {
+                System.out.printf("%d=>", list.digit);
+                list = list.next;
+            }
+            System.out.printf("\n");
+        }
+    }
+
+    public static Node SwapInPair(Node list) {
+        Node head = list;
+        if (head.next != null) {
+            head = list.next;
+        }
+        head.PrintList();
+        Node prev = null;
+        Node cur = list;
+        Node next = list.next;
+        while (cur != null && next != null) {
+            cur.next = next.next;
+            next.next = cur;
+            if (prev != null) {
+                prev.next = next;
+            }
+            System.out.println("Print out after round");
+            head.PrintList();
+            prev = cur;
+            cur = cur.next;
+            if (cur != null) {
+                next = cur.next;
+            }
+        }
+        return head;
+    }
+}
