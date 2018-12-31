@@ -1,0 +1,144 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class LLMergeKSorted{
+
+     public static void main(String []args){
+        System.out.println("Hello World");
+        List<LL> inputs = new ArrayList<LL> ();
+        inputs.add(new LL(new int[] {1, 4, 7}));
+        inputs.add(new LL(new int[] {2, 5, 8}));
+        inputs.add(new LL(new int[] {3, 6, 9}));
+        printLists(inputs);
+        LL res = mergeKSorted(inputs);
+        res.print();
+     }
+     
+     static class LL {
+         int value;
+         LL next;
+         
+         public LL(int v) {
+             value = v;
+         }
+         
+         public LL(int[] input) {
+             if (input.length < 1) return;
+             value = input[0];
+             LL current = this;
+             for (int i = 1; i < input.length; i++) {
+                 current.next = new LL(input[i]);
+                 current = current.next;
+             }
+         }
+         
+         public void print() {
+             LL current = this;
+             while (current != null) {
+                 System.out.print(current.value);
+                 if (current.next != null) {
+                    System.out.print("=>");
+
+                 }
+                 current = current.next;
+             }
+             System.out.println();
+         }
+     }
+     
+     static int GetSmlPosition(List<LL> lists) {
+         int current_smallest_value = Integer.MAX_VALUE;
+         int current_smallest_position = -1;
+         for (int ll_index = 0; ll_index < lists.size(); ll_index++) {
+             if ( lists.get(ll_index) != null && lists.get(ll_index).value < current_smallest_value ) {
+                current_smallest_value = lists.get(ll_index).value;
+                current_smallest_position = ll_index;             }
+         }
+         return current_smallest_position;
+     } 
+     
+     static LL MergeOneNode(LL res_tail, List<LL> lists) {
+         System.out.println("MergeOneNode");
+         printLists(lists);
+         int smallest_position = GetSmlPosition(lists);
+         System.out.println("smallest_pos: " + smallest_position);
+         if (smallest_position != -1 && res_tail != null) { 
+             res_tail.next = lists.get(smallest_position);
+             res_tail = res_tail.next;
+             lists.set(smallest_position, lists.get(smallest_position).next);
+         }
+         return res_tail;
+     }
+     
+     static boolean finished(List<LL> lists) {
+         for ( int i = 0; i < lists.size(); i ++ ) {
+             if ( lists.get(i) != null ) {
+                 return false;
+             }
+         }
+         return true;
+     }
+     
+     // n is defined as total element in the all ll in the lists.
+     // k is defined as length of the list.
+     // then the run time O(nk)
+     // Space is: O(n) hosting all the merged ll.
+     static LL mergeKSorted(List<LL> lists) {
+         LL head = new LL(0);
+         LL res_tail = head;
+         while (finished(lists) == false) {
+            res_tail = MergeOneNode(res_tail, lists);
+         }
+         return head;
+     }
+     
+     // n is defined as total element in the all ll in the lists.
+     // k is defined as length of the list.
+     // then the run time O(nlog(k))
+     // Space is: O(n) hosting all the merged ll.
+     static void mergeKSortedDivConq(List<LL> lists) {
+         while (lists.size() > 1) {
+             int length = lists.size();
+             for (int index = 0; index < length / 2; index ++) {
+                 System.out.println("mergeKSortedDivConq: " + index);
+                 int end_index = length - index - 1;
+                LL merged = merge2Sorted(lists.get(index), lists.get(end_index));
+                lists.set(index, merged);
+                lists.remove(end_index);
+                printLists(lists);
+             }
+         }
+     }
+     
+     static LL merge2Sorted(LL l1, LL l2) {
+         System.out.println("merge2Sorted: ");
+         LL head = new LL(0);
+         LL res = head;
+         while (l1 != null || l2 != null) {
+             if (l1 == null) {
+                 res.next = new LL(l2.value);
+                 l2 = l2.next;
+             } else if (l2 == null) {
+                 res.next = new LL(l1.value);
+                 l1 = l1.next;
+             } else if (l1.value < l2.value) {
+                 res.next = new LL(l1.value);
+                 l1 = l1.next;
+             } else {
+                 res.next = new LL(l2.value);
+                 l2 = l2.next;
+             }
+             res = res.next;
+         }
+         head.print();
+         return head.next;
+     }
+     
+     static void printLists(List<LL> inputs) {
+        for ( int i = 0; i < inputs.size(); i++ ) {
+            if ( inputs.get(i) != null ) {
+                inputs.get(i).print();
+            }
+        }
+     }
+}
